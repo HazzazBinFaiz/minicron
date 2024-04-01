@@ -23,7 +23,7 @@ import (
 var (
 	verbose       = false
 	jobIDSequence = 1
-	useShell = false
+	useShell bool
 	shell string
 )
 

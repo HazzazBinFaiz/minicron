@@ -13,11 +13,17 @@ See https://godoc.org/github.com/robfig/cron for the complete interval / schedul
 
 Minicron will prevent multiple command executions if a command is still running. Stdout / Stderr output is combined for all commands.
 
-Commands are exec'd on shell `/bin/sh`, you can configure shell from environment variable `SHELL`
+Note: Commands are not exec'd in a subshell by default. But subshell can be configured using `MINICRON_SHELL` environment variable.
 
 ## Running in Docker
 
     docker pull networkteamcom/minicron
+
+    # Without subshell
     docker run -it --rm networkteamcom/minicron -v -c "test" "@every 5s" "echo Test"
+
+    # With subshell
+    docker run -it --rm -e MINICRON_SHELL networkteamcom/minicron -v -c "test" "@every 5s" "echo Test && echo Done"
+
 
 But most of the time you might want to use this in a [multi-stage build](https://docs.docker.com/engine/userguide/eng-image/multistage-build/#use-multi-stage-builds) to copy the static binary to another image.

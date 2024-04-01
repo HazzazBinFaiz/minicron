@@ -26,7 +26,7 @@ var (
 )
 
 func main() {
-	shellEnv, ok := os.LookupEnv(key)
+	shellEnv, ok := os.LookupEnv("SHELL")
 	if ok {
 		shell = shellEnv
 	}

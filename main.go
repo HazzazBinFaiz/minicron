@@ -20,6 +20,8 @@ import (
 	"github.com/robfig/cron"
 )
 
+const Shell = "/bin/sh"
+
 var (
 	verbose       = false
 	jobIDSequence = 1
@@ -74,8 +76,7 @@ func (c *cmdJob) Run() {
 		if verbose {
 			c.log("Running", ansiWhite(c.cmd))
 		}
-		cmdAndArgs := strings.Split(c.cmd, " ")
-		p := exec.Command(cmdAndArgs[0], cmdAndArgs[1:]...)
+		p := exec.Command(Shell, "-c", c.cmd)
 
 		logStreamerOut := logstreamer.NewLogstreamer(c.logger, "stdout", false)
 		defer logStreamerOut.Close()

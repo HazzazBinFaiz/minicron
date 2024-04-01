@@ -28,7 +28,7 @@ var (
 )
 
 func main() {
-	shell, useShell := os.LookupEnv("MINICRON_SHELL")
+	shell, useShell = os.LookupEnv("MINICRON_SHELL")
 	c := cron.New()
 	addJobs(c, os.Args)
 	c.Run()

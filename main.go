@@ -78,11 +78,12 @@ func (c *cmdJob) Run() {
 			c.log("Running", ansiWhite(c.cmd))
 		}
 
+		p = nil
 		if useShell {
-			p := exec.Command(shell, "-c", c.cmd)
+			p = exec.Command(shell, "-c", c.cmd)
 		} else {
 			cmdAndArgs := strings.Split(c.cmd, " ")
-			p := exec.Command(cmdAndArgs[0], cmdAndArgs[1:]...)
+			p = exec.Command(cmdAndArgs[0], cmdAndArgs[1:]...)
 		}
 
 		logStreamerOut := logstreamer.NewLogstreamer(c.logger, "stdout", false)

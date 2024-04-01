@@ -23,8 +23,8 @@ import (
 var (
 	verbose       = false
 	jobIDSequence = 1
-	shell = "/bin/sh"
 	useShell = false
+	shell string
 )
 
 func main() {

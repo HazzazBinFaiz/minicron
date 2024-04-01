@@ -78,7 +78,7 @@ func (c *cmdJob) Run() {
 			c.log("Running", ansiWhite(c.cmd))
 		}
 
-		p = nil
+		var p exec.Cmd
 		if useShell {
 			p = exec.Command(shell, "-c", c.cmd)
 		} else {

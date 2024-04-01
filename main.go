@@ -13,14 +13,16 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/kvz/logstreamer"
 	"github.com/mgutz/ansi"
 	"github.com/robfig/cron"
 )
 
-const Shell = "/bin/sh"
+shell, ok := os.LookupEnv(key)
+if !ok {
+	shell = "/bin/sh"
+}
 
 var (
 	verbose       = false

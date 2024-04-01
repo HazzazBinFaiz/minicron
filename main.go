@@ -19,17 +19,17 @@ import (
 	"github.com/robfig/cron"
 )
 
-shell, ok := os.LookupEnv(key)
-if !ok {
-	shell = "/bin/sh"
-}
-
 var (
 	verbose       = false
 	jobIDSequence = 1
+	shell = "/bin/sh"
 )
 
 func main() {
+	shellEnv, ok := os.LookupEnv(key)
+	if ok {
+		shell = shellEnv
+	}
 	c := cron.New()
 	addJobs(c, os.Args)
 	c.Run()
@@ -78,7 +78,7 @@ func (c *cmdJob) Run() {
 		if verbose {
 			c.log("Running", ansiWhite(c.cmd))
 		}
-		p := exec.Command(Shell, "-c", c.cmd)
+		p := exec.Command(shell, "-c", c.cmd)
 
 		logStreamerOut := logstreamer.NewLogstreamer(c.logger, "stdout", false)
 		defer logStreamerOut.Close()

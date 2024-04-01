@@ -23,7 +23,7 @@ Note: Commands are not exec'd in a subshell by default. But subshell can be conf
     docker run -it --rm networkteamcom/minicron -v -c "test" "@every 5s" "echo Test"
 
     # With subshell
-    docker run -it --rm -e MINICRON_SHELL networkteamcom/minicron -v -c "test" "@every 5s" "echo Test && echo Done"
+    docker run -it --rm -e MINICRON_SHELL=/bin/sh networkteamcom/minicron -v -c "test" "@every 5s" "echo Test && echo Done"
 
 
 But most of the time you might want to use this in a [multi-stage build](https://docs.docker.com/engine/userguide/eng-image/multistage-build/#use-multi-stage-builds) to copy the static binary to another image.

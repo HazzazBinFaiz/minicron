@@ -13,6 +13,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/kvz/logstreamer"
 	"github.com/mgutz/ansi"
@@ -23,13 +24,11 @@ var (
 	verbose       = false
 	jobIDSequence = 1
 	shell = "/bin/sh"
+	useShell = false
 )
 
 func main() {
-	shellEnv, ok := os.LookupEnv("SHELL")
-	if ok {
-		shell = shellEnv
-	}
+	shell, useShell := os.LookupEnv("MINICRON_SHELL")
 	c := cron.New()
 	addJobs(c, os.Args)
 	c.Run()
@@ -78,7 +77,13 @@ func (c *cmdJob) Run() {
 		if verbose {
 			c.log("Running", ansiWhite(c.cmd))
 		}
-		p := exec.Command(shell, "-c", c.cmd)
+
+		if useShell {
+			p := exec.Command(shell, "-c", c.cmd)
+		} else {
+			cmdAndArgs := strings.Split(c.cmd, " ")
+			p := exec.Command(cmdAndArgs[0], cmdAndArgs[1:]...)
+		}
 
 		logStreamerOut := logstreamer.NewLogstreamer(c.logger, "stdout", false)
 		defer logStreamerOut.Close()

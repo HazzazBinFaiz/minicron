@@ -13,7 +13,7 @@ See https://godoc.org/github.com/robfig/cron for the complete interval / schedul
 
 Minicron will prevent multiple command executions if a command is still running. Stdout / Stderr output is combined for all commands.
 
-Note: Commands are exec'd without a subshell.
+Commands are exec'd on shell `/bin/sh`, you can configure shell from environment variable `SHELL`
 
 ## Running in Docker
 
